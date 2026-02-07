@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { api } from '../api'
+import { CardSpotlight } from '@/components/ui/card-spotlight'
+import { GlowingEffect } from '@/components/ui/glowing-effect'
 
 const IRREVERSIBILITY_COLOR = {
   HIGH: 'text-textPrimary bg-riskHigh/20 border border-riskHigh',
@@ -58,8 +60,8 @@ export default function DecisionComparison({ selectedRegion, onApprove }) {
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Decision Comparison Interface</h2>
-        <p className="text-gray-600 text-sm mb-4">
+        <h2 className="text-2xl font-bold text-textPrimary mb-2">Decision Comparison Interface</h2>
+        <p className="text-textSecondary text-sm mb-4">
           Compare response options with benefit/risk trade-offs, reversibility, and ethical sensitivity
         </p>
         <div className="bg-panel border border-border px-4 py-3 text-sm text-textPrimary">
@@ -69,17 +71,17 @@ export default function DecisionComparison({ selectedRegion, onApprove }) {
 
       <div className="space-y-8">
         {filtered.map((pkg) => (
-          <div key={pkg.region} className="bg-white border-2 border-gray-200 rounded-xl overflow-hidden">
+          <div key={pkg.region} className="bg-surface/90 backdrop-blur-sm border-2 border-border rounded-xl overflow-hidden shadow-lg">
             {/* Header */}
             <div className="bg-surface text-textPrimary p-4 border-b border-border">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xl font-bold mb-1">{pkg.region}</h3>
                   <div className="flex items-center gap-3 text-sm">
-                    <span className="bg-white/20 px-2 py-1 rounded font-semibold">
+                    <span className="bg-surface/30 backdrop-blur-sm px-2 py-1 rounded font-semibold border border-border">
                       Risk: {pkg.risk_assessment.risk_level}
                     </span>
-                    <span className="bg-white/20 px-2 py-1 rounded">
+                    <span className="bg-surface/30 backdrop-blur-sm px-2 py-1 rounded border border-border">
                       Confidence: {(pkg.risk_assessment.confidence * 100).toFixed(0)}%
                     </span>
                     <span
@@ -103,26 +105,37 @@ export default function DecisionComparison({ selectedRegion, onApprove }) {
             </div>
 
             {/* Options Grid */}
-            <div className="p-5">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div className="p-5 bg-bg/50">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch">
                 {pkg.options.map((option) => {
                   const key = `${pkg.region}::${option.id}`
                   const isApproved = approved.has(key)
                   const isLoading = approving === key
 
                   return (
-                    <div
-                      key={option.id}
-                      className={`border-2 rounded-lg p-4 flex flex-col ${
-                        isApproved
-                          ? 'bg-green-50 border-green-400'
-                          : 'border-gray-200 bg-gray-50'
-                      }`}
-                    >
+                    <div key={option.id} className="relative h-full">
+                      <GlowingEffect
+                        spread={30}
+                        glow={true}
+                        disabled={isApproved}
+                        proximity={70}
+                        inactiveZone={0.1}
+                        borderWidth={2}
+                      />
+                      <CardSpotlight
+                        className={`h-full w-full border-2 ${
+                          isApproved
+                            ? 'bg-riskLow/30 border-riskLow'
+                            : 'border-border bg-surface/95'
+                        } backdrop-blur-sm`}
+                        radius={300}
+                        color={isApproved ? '#4B7F52' : '#64748B'}
+                      >
+                        <div className="relative z-20 h-full flex flex-col">
                       {/* Option Header */}
                       <div className="mb-3">
-                        <h4 className="font-bold text-lg text-gray-900 mb-1">{option.title}</h4>
-                        <p className="text-xs text-gray-600">{option.description}</p>
+                        <h4 className="font-bold text-lg text-textPrimary mb-1">{option.title}</h4>
+                        <p className="text-xs text-textSecondary">{option.description}</p>
                       </div>
 
                       {/* Benefit */}
@@ -181,6 +194,8 @@ export default function DecisionComparison({ selectedRegion, onApprove }) {
                           </button>
                         )}
                       </div>
+                        </div>
+                      </CardSpotlight>
                     </div>
                   )
                 })}

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { api } from '../api'
 import GovernanceAlertCard from './GovernanceAlertCard'
+import { CardSpotlight } from '@/components/ui/card-spotlight'
+import { GlowingEffect } from '@/components/ui/glowing-effect'
 
 export default function GovernancePanel() {
   const [status, setStatus] = useState([])
@@ -37,23 +39,38 @@ export default function GovernancePanel() {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-gradient-to-br from-white to-slate-50 border-2 border-slate-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-          <div className="text-4xl font-bold text-slate-900 mb-2">{status.length}</div>
-          <div className="text-sm text-slate-600 font-semibold uppercase tracking-wide">Total Regions</div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 items-stretch">
+        <div className="relative h-full">
+          <GlowingEffect spread={30} glow={true} proximity={70} borderWidth={2} />
+          <CardSpotlight className="h-full w-full border border-border bg-surface/95 backdrop-blur-sm" radius={300} color="#64748B">
+            <div className="relative z-20">
+              <div className="text-4xl font-bold text-textPrimary mb-2">{status.length}</div>
+              <div className="text-sm text-textSecondary font-semibold uppercase tracking-wide">Total Regions</div>
+            </div>
+          </CardSpotlight>
         </div>
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-          <div className="text-4xl font-bold text-blue-700 mb-2">{approvalCount}</div>
-          <div className="text-sm text-blue-600 font-semibold uppercase tracking-wide">Require Human Approval</div>
+        <div className="relative h-full">
+          <GlowingEffect spread={30} glow={true} proximity={70} borderWidth={2} />
+          <CardSpotlight className="h-full w-full border border-accent/50 bg-surface/95 backdrop-blur-sm" radius={300} color="#64748B">
+            <div className="relative z-20">
+              <div className="text-4xl font-bold text-accent mb-2">{approvalCount}</div>
+              <div className="text-sm text-textSecondary font-semibold uppercase tracking-wide">Require Human Approval</div>
+            </div>
+          </CardSpotlight>
         </div>
-        <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-          <div className="text-4xl font-bold text-amber-700 mb-2">{criticalCount}</div>
-          <div className="text-sm text-amber-600 font-semibold uppercase tracking-wide">Critical Escalations</div>
+        <div className="relative h-full">
+          <GlowingEffect spread={30} glow={true} proximity={70} borderWidth={2} />
+          <CardSpotlight className="h-full w-full border border-riskHigh/50 bg-surface/95 backdrop-blur-sm" radius={300} color="#7A3B3B">
+            <div className="relative z-20">
+              <div className="text-4xl font-bold text-riskHigh mb-2">{criticalCount}</div>
+              <div className="text-sm text-textSecondary font-semibold uppercase tracking-wide">Critical Escalations</div>
+            </div>
+          </CardSpotlight>
         </div>
       </div>
 
       {/* Core Principle Banner */}
-      <div className="bg-surface text-textPrimary p-5 mb-6 border border-border">
+      <div className="bg-surface/90 backdrop-blur-sm text-textPrimary p-5 mb-6 border border-border rounded-lg">
         <h3 className="text-sm font-semibold mb-2 uppercase tracking-wide">Core Governance Principle</h3>
         <p className="text-sm leading-relaxed">
           This system <strong>NEVER</strong> executes decisions autonomously. All actions require
@@ -66,7 +83,7 @@ export default function GovernancePanel() {
       {status.filter((s) => s.governance_status === 'ESCALATE').length > 0 && (
         <div className="mb-8">
           <h3 className="text-lg font-semibold text-textPrimary mb-4">Critical Escalations</h3>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
             {status
               .filter((s) => s.governance_status === 'ESCALATE')
               .map((item, i) => (
@@ -85,7 +102,7 @@ export default function GovernancePanel() {
       )}
 
       {/* Governance Table */}
-      <div className="bg-panel border border-border overflow-hidden">
+      <div className="bg-panel/90 backdrop-blur-sm border border-border overflow-hidden rounded-lg">
         <table className="w-full text-sm">
           <thead className="bg-surface border-b border-border">
             <tr>

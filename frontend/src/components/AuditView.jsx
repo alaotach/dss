@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { api } from '../api'
+import { CardSpotlight } from '@/components/ui/card-spotlight'
+import { GlowingEffect } from '@/components/ui/glowing-effect'
 
 const EVENT_COLORS = {
   DATA_INGESTION: 'bg-accent/20 text-textPrimary border border-accent',
@@ -40,38 +42,58 @@ export default function AuditView() {
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Audit Trail & Accountability</h2>
-        <p className="text-gray-600 text-sm mb-4">
+        <h2 className="text-2xl font-bold text-textPrimary mb-2">Audit Trail & Accountability</h2>
+        <p className="text-textSecondary text-sm mb-4">
           Immutable record of all system decisions, data ingestion, and human approvals
         </p>
       </div>
 
       {/* Summary Stats */}
       {summary && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-panel border border-border p-4">
-            <div className="text-2xl font-semibold text-textPrimary mb-1">{summary.total_events}</div>
-            <div className="text-xs text-textSecondary uppercase tracking-wide">Total Events</div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 items-stretch">
+          <div className="relative h-full">
+            <GlowingEffect spread={25} glow={true} proximity={60} borderWidth={1.5} />
+            <CardSpotlight className="h-full w-full border border-border bg-surface/95 backdrop-blur-sm" radius={250} color="#64748B">
+              <div className="relative z-20">
+                <div className="text-2xl font-semibold text-textPrimary mb-1">{summary.total_events}</div>
+                <div className="text-xs text-textSecondary uppercase tracking-wide">Total Events</div>
+              </div>
+            </CardSpotlight>
           </div>
-          <div className="bg-panel border border-border p-4">
-            <div className="text-2xl font-semibold text-textPrimary mb-1">{summary.human_approvals}</div>
-            <div className="text-xs text-textSecondary uppercase tracking-wide">Human Approvals</div>
+          <div className="relative h-full">
+            <GlowingEffect spread={25} glow={true} proximity={60} borderWidth={1.5} />
+            <CardSpotlight className="h-full w-full border border-border bg-surface/95 backdrop-blur-sm" radius={250} color="#4B7F52">
+              <div className="relative z-20">
+                <div className="text-2xl font-semibold text-textPrimary mb-1">{summary.human_approvals}</div>
+                <div className="text-xs text-textSecondary uppercase tracking-wide">Human Approvals</div>
+              </div>
+            </CardSpotlight>
           </div>
-          <div className="bg-panel border border-border p-4">
-            <div className="text-2xl font-semibold text-textPrimary mb-1">{summary.autonomous_actions}</div>
-            <div className="text-xs text-textSecondary uppercase tracking-wide">Autonomous Actions</div>
+          <div className="relative h-full">
+            <GlowingEffect spread={25} glow={true} proximity={60} borderWidth={1.5} />
+            <CardSpotlight className="h-full w-full border border-border bg-surface/95 backdrop-blur-sm" radius={250} color="#7A3B3B">
+              <div className="relative z-20">
+                <div className="text-2xl font-semibold text-textPrimary mb-1">{summary.autonomous_actions}</div>
+                <div className="text-xs text-textSecondary uppercase tracking-wide">Autonomous Actions</div>
+              </div>
+            </CardSpotlight>
           </div>
-          <div className="bg-panel border border-border p-4">
-            <div className="text-2xl font-semibold text-textPrimary mb-1">
-              {Object.keys(summary.event_breakdown).length}
-            </div>
-            <div className="text-xs text-textSecondary uppercase tracking-wide">Event Types</div>
+          <div className="relative h-full">
+            <GlowingEffect spread={25} glow={true} proximity={60} borderWidth={1.5} />
+            <CardSpotlight className="h-full w-full border border-border bg-surface/95 backdrop-blur-sm" radius={250} color="#8A6A2F">
+              <div className="relative z-20">
+                <div className="text-2xl font-semibold text-textPrimary mb-1">
+                  {Object.keys(summary.event_breakdown).length}
+                </div>
+                <div className="text-xs text-textSecondary uppercase tracking-wide">Event Types</div>
+              </div>
+            </CardSpotlight>
           </div>
         </div>
       )}
 
       {/* Accountability Banner */}
-      <div className="bg-surface text-textPrimary p-5 mb-6 border border-border">
+      <div className="bg-surface/90 backdrop-blur-sm text-textPrimary p-5 mb-6 border border-border rounded-lg">
         <h3 className="text-sm font-semibold mb-2 uppercase tracking-wide">100% Traceability</h3>
         <p className="text-sm">
           Every decision, risk assessment, and data ingestion is logged with full context. This
@@ -105,7 +127,7 @@ export default function AuditView() {
       {filtered.length === 0 ? (
         <p className="text-textMuted text-center py-10 text-sm">No events match the selected filter</p>
       ) : (
-        <div className="bg-panel border border-border overflow-hidden">
+        <div className="bg-panel/90 backdrop-blur-sm border border-border overflow-hidden rounded-lg">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-surface border-b border-border">

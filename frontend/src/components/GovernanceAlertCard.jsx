@@ -1,13 +1,23 @@
 import { CardSpotlight } from "@/components/ui/card-spotlight";
+import { GlowingEffect } from "@/components/ui/glowing-effect";
 
 export default function GovernanceAlertCard({ title, message, status, confidence, requiresApproval, rules }) {
   return (
-    <CardSpotlight 
-      className="h-auto w-full border-border bg-surface"
-      radius={350}
-      color="#64748B" // accent color
-    >
-      <div className="relative z-20">
+    <div className="relative h-full">
+      <GlowingEffect
+        spread={40}
+        glow={true}
+        disabled={false}
+        proximity={80}
+        inactiveZone={0.1}
+        borderWidth={2}
+      />
+      <CardSpotlight 
+        className="h-full w-full border-border bg-surface/95 backdrop-blur-sm"
+        radius={350}
+        color="#64748B" // accent color
+      >
+      <div className="relative z-20 h-full flex flex-col">
         <div className="flex items-center gap-3 mb-4">
           <AlertIcon />
           <h3 className="text-lg font-semibold text-textPrimary uppercase tracking-wide">
@@ -32,6 +42,9 @@ export default function GovernanceAlertCard({ title, message, status, confidence
           </div>
         </div>
 
+        {/* Spacer to push rules to bottom */}
+        <div className="flex-1" />
+
         {rules && rules.length > 0 && (
           <div>
             <h4 className="text-sm font-medium text-textPrimary mb-3 uppercase tracking-wide">
@@ -46,6 +59,7 @@ export default function GovernanceAlertCard({ title, message, status, confidence
         )}
       </div>
     </CardSpotlight>
+    </div>
   );
 }
 

@@ -1,4 +1,5 @@
 import { CardSpotlight } from "@/components/ui/card-spotlight";
+import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { useState } from 'react';
 
 export default function CriticalRegionCard({ region, riskLevel, riskScore, confidence, hazard, exposure, vulnerability, uncertaintyWarnings, reasoningGraph, onViewDecisions, color }) {
@@ -13,12 +14,21 @@ export default function CriticalRegionCard({ region, riskLevel, riskScore, confi
   );
   
   return (
-    <CardSpotlight 
-      className="h-auto w-full border-border bg-surface"
-      radius={400}
-      color={spotlightColor}
-    >
-      <div className="relative z-20">
+    <div className="relative h-full">
+      <GlowingEffect
+        spread={40}
+        glow={true}
+        disabled={false}
+        proximity={80}
+        inactiveZone={0.1}
+        borderWidth={2}
+      />
+      <CardSpotlight 
+        className="h-full w-full border-border bg-surface/95 backdrop-blur-sm"
+        radius={400}
+        color={spotlightColor}
+      >
+      <div className="relative z-20 h-full flex flex-col">
         <div className="flex items-start justify-between mb-4">
           <h3 className="text-xl font-semibold text-textPrimary">
             {region}
@@ -52,6 +62,9 @@ export default function CriticalRegionCard({ region, riskLevel, riskScore, confi
           <ComponentItem label="Exposure" value={exposure} />
           <ComponentItem label="Vulnerability" value={vulnerability} />
         </div>
+
+        {/* Spacer to push content down */}
+        <div className="flex-1" />
 
         {/* Uncertainty Warnings */}
         {uncertaintyWarnings && uncertaintyWarnings.length > 0 && (
@@ -99,6 +112,7 @@ export default function CriticalRegionCard({ region, riskLevel, riskScore, confi
         </button>
       </div>
     </CardSpotlight>
+    </div>
   );
 }
 

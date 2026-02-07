@@ -1,16 +1,18 @@
 import { useState } from 'react'
+import { LayoutDashboard, Scale, ShieldCheck, FileText, Waves, AlertTriangle, Database } from 'lucide-react'
 import SituationalDashboard from './components/SituationalDashboard'
 import DecisionComparison from './components/DecisionComparison'
 import GovernancePanel from './components/GovernancePanel'
 import AuditView from './components/AuditView'
 import { WavyBackground } from './components/ui/wavy-background'
+import { AnimeNavBar } from './components/ui/anime-navbar'
 import { api } from './api'
 
 const TABS = [
-  { id: 'dashboard', label: 'Situational Awareness', icon: null },
-  { id: 'decisions', label: 'Decision Comparison', icon: null },
-  { id: 'governance', label: 'Governance', icon: null },
-  { id: 'audit', label: 'Audit Trail', icon: null },
+  { id: 'dashboard', label: 'Situational Awareness', icon: LayoutDashboard },
+  { id: 'decisions', label: 'Decision Comparison', icon: Scale },
+  { id: 'governance', label: 'Governance', icon: ShieldCheck },
+  { id: 'audit', label: 'Audit Trail', icon: FileText },
 ]
 
 export default function App() {
@@ -68,10 +70,29 @@ export default function App() {
     setLoading(false)
   }
 
+  const dropdownItems = [
+    {
+      label: 'Load Flood Scenario',
+      icon: Waves,
+      onClick: handleLoadScenario,
+      disabled: loading
+    },
+    {
+      label: 'Conflicting Reports',
+      icon: AlertTriangle,
+      onClick: handleConflictingReports,
+      disabled: loading
+    },
+    {
+      label: 'Inject Uncertainty',
+      icon: Database,
+      onClick: handleInjectUncertainty,
+      disabled: loading
+    }
+  ]
+
   return (
     <WavyBackground 
-      containerClassName="min-h-screen"
-      className="w-full"
       colors={[
         "#1e293b",
         "#334155",
@@ -85,47 +106,16 @@ export default function App() {
       speed="slow"
       waveOpacity={0.3}
     >
-      <div className="min-h-screen flex flex-col relative z-10">
-        {/* Header */}
-        <header className="bg-surface/90 backdrop-blur-sm text-textPrimary shadow-md border-b border-border">
-        <div className="px-6 py-4">
-          <div className="flex items-center justify-between mb-3">
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight text-textPrimary">
-                Advanced Disaster Response DSS
-              </h1>
-              <p className="text-textSecondary text-sm mt-1">
-                Explainable Risk Assessment • Human-in-the-Loop • Full Traceability
-              </p>
-            </div>
-          </div>
-
-          {/* Demo Controls */}
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={handleLoadScenario}
-              disabled={loading}
-              className="bg-panel hover:bg-border text-textPrimary font-medium px-5 py-2 border border-border transition disabled:opacity-50 text-sm"
-            >
-              Load Flood Scenario
-            </button>
-            <button
-              onClick={handleConflictingReports}
-              disabled={loading}
-              className="bg-panel hover:bg-border text-textPrimary font-medium px-5 py-2 border border-border transition disabled:opacity-50 text-sm"
-            >
-              Conflicting Reports
-            </button>
-            <button
-              onClick={handleInjectUncertainty}
-              disabled={loading}
-              className="bg-panel hover:bg-border text-textPrimary font-medium px-5 py-2 border border-border transition disabled:opacity-50 text-sm"
-            >
-              Inject Uncertainty
-            </button>
-          </div>
-        </div>
-      </header>
+      <div className="min-h-screen flex flex-col">
+        {/* Simplified Header */}
+        <header className="text-center py-6">
+          <h1 className="text-3xl font-bold tracking-tight text-textPrimary mb-2">
+            Advanced Disaster Response DSS
+          </h1>
+          <p className="text-textSecondary text-sm">
+            Explainable Risk Assessment • Human-in-the-Loop • Full Traceability
+          </p>
+        </header>
 
       {/* Message Banner */}
       {message && (
@@ -141,23 +131,12 @@ export default function App() {
       )}
 
       {/* Tab Navigation */}
-      <nav className="bg-panel/90 backdrop-blur-sm border-b border-border shadow-sm">
-        <div className="px-6 flex gap-1">
-          {TABS.map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setTab(t.id)}
-              className={`px-5 py-3 text-sm font-medium transition ${
-                tab === t.id
-                  ? 'bg-surface border-t border-x border-border text-textPrimary'
-                  : 'text-textMuted hover:text-textPrimary hover:bg-surface/50'
-              }`}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
-      </nav>
+      <AnimeNavBar 
+        items={TABS} 
+        defaultActive="dashboard" 
+        onTabChange={(tabId) => setTab(tabId)}
+        dropdownItems={dropdownItems}
+      />
 
       {/* Main Content */}
       <main className="flex-1 p-6 bg-transparent">

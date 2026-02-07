@@ -28,13 +28,13 @@ export default function SituationalDashboard({ onSelectRegion }) {
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Situational Awareness Dashboard</h2>
-        <p className="text-gray-600 text-sm">
+        <h2 className="text-2xl font-bold text-textPrimary mb-2">Situational Awareness Dashboard</h2>
+        <p className="text-textSecondary text-sm">
           Multi-source risk assessment with explainable reasoning and uncertainty tracking
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
         {assessments.map((assessment) => (
           <CriticalRegionCard
             key={assessment.region}
