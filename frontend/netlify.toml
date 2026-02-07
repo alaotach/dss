@@ -9,3 +9,9 @@
 
 [build.environment]
   NODE_VERSION = "18"
+
+# For production with backend deployed elsewhere, set:
+# VITE_API_URL = "https://your-backend-url.com"
+# 
+# Leave unset to use mock data for demo purposes
+
