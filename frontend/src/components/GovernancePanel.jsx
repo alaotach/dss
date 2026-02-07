@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api } from '../api'
+import GovernanceAlertCard from './GovernanceAlertCard'
 
 export default function GovernancePanel() {
   const [status, setStatus] = useState([])
@@ -61,6 +62,28 @@ export default function GovernancePanel() {
         </p>
       </div>
 
+      {/* Critical Escalations - Spotlight Cards */}
+      {status.filter((s) => s.governance_status === 'ESCALATE').length > 0 && (
+        <div className="mb-8">
+          <h3 className="text-lg font-semibold text-textPrimary mb-4">Critical Escalations</h3>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {status
+              .filter((s) => s.governance_status === 'ESCALATE')
+              .map((item, i) => (
+                <GovernanceAlertCard
+                  key={i}
+                  title={`${item.region} - ${item.risk_level} Risk`}
+                  message={item.reason}
+                  status="ESCALATE"
+                  confidence={item.confidence}
+                  requiresApproval={item.requires_approval}
+                  rules={item.rules_triggered || []}
+                />
+              ))}
+          </div>
+        </div>
+      )}
+
       {/* Governance Table */}
       <div className="bg-panel border border-border overflow-hidden">
         <table className="w-full text-sm">
@@ -94,12 +117,13 @@ export default function GovernancePanel() {
                   </span>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="font-mono text-textSecondary">
+                  <span className={`font-mono ${
+                      item.confidence >= 0.7
+                        ? 'text-textPrimary'
                         : item.confidence >= 0.5
-                        ? 'text-yellow-700'
-                        : 'text-red-700'
-                    }`}
-                  >
+                        ? 'text-yellow-400'
+                        : 'text-red-400'
+                    }`}>
                     {(item.confidence * 100).toFixed(0)}%
                   </span>
                 </td>

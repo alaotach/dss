@@ -3,6 +3,7 @@ import SituationalDashboard from './components/SituationalDashboard'
 import DecisionComparison from './components/DecisionComparison'
 import GovernancePanel from './components/GovernancePanel'
 import AuditView from './components/AuditView'
+import { WavyBackground } from './components/ui/wavy-background'
 import { api } from './api'
 
 const TABS = [
@@ -68,16 +69,32 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
-      {/* Header */}
-      <header className="bg-gray-900 text-white shadow-md border-b border-gray-800">
+    <WavyBackground 
+      containerClassName="min-h-screen"
+      className="w-full"
+      colors={[
+        "#1e293b",
+        "#334155",
+        "#475569",
+        "#64748b",
+        "#374151",
+      ]}
+      waveWidth={60}
+      backgroundFill="#0F172A"
+      blur={12}
+      speed="slow"
+      waveOpacity={0.3}
+    >
+      <div className="min-h-screen flex flex-col relative z-10">
+        {/* Header */}
+        <header className="bg-surface/90 backdrop-blur-sm text-textPrimary shadow-md border-b border-border">
         <div className="px-6 py-4">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <h1 className="text-2xl font-bold tracking-tight">
-                🛡️ Advanced Disaster Response DSS
+              <h1 className="text-2xl font-bold tracking-tight text-textPrimary">
+                Advanced Disaster Response DSS
               </h1>
-              <p className="text-blue-200 text-sm mt-1">
+              <p className="text-textSecondary text-sm mt-1">
                 Explainable Risk Assessment • Human-in-the-Loop • Full Traceability
               </p>
             </div>
@@ -113,10 +130,10 @@ export default function App() {
       {/* Message Banner */}
       {message && (
         <div
-          className={`px-6 py-3 text-sm font-medium ${
+          className={`px-6 py-3 text-sm font-medium backdrop-blur-sm ${
             message.type === 'error'
-              ? 'bg-red-100 border-b border-red-300 text-red-800'
-              : 'bg-green-100 border-b border-green-300 text-green-800'
+              ? 'bg-riskHigh/80 border-b border-riskHigh text-textPrimary'
+              : 'bg-riskLow/80 border-b border-riskLow text-textPrimary'
           }`}
         >
           {message.text}
@@ -124,7 +141,7 @@ export default function App() {
       )}
 
       {/* Tab Navigation */}
-      <nav className="bg-white border-b shadow-sm">
+      <nav className="bg-panel/90 backdrop-blur-sm border-b border-border shadow-sm">
         <div className="px-6 flex gap-1">
           {TABS.map((t) => (
             <button
@@ -132,8 +149,8 @@ export default function App() {
               onClick={() => setTab(t.id)}
               className={`px-5 py-3 text-sm font-medium transition ${
                 tab === t.id
-                  ? 'bg-panel text-textPrimary border-t border-x border-border'
-                  : 'text-textSecondary hover:text-textPrimary'
+                  ? 'bg-surface border-t border-x border-border text-textPrimary'
+                  : 'text-textMuted hover:text-textPrimary hover:bg-surface/50'
               }`}
             >
               {t.label}
@@ -143,7 +160,7 @@ export default function App() {
       </nav>
 
       {/* Main Content */}
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-6 bg-transparent">
         <div className="max-w-7xl mx-auto">
           {tab === 'dashboard' && (
             <SituationalDashboard
@@ -170,7 +187,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t px-6 py-4 text-center text-xs text-gray-500">
+      <footer className="bg-surface/90 backdrop-blur-sm border-t border-border px-6 py-4 text-center text-xs text-textSecondary">
         <div className="mb-1">
           <strong>Academic Demonstration System</strong> — Mock Data Only — No Real-World Actions
         </div>
@@ -179,7 +196,8 @@ export default function App() {
           Immutable Audit Trail
         </div>
       </footer>
-    </div>
+      </div>
+    </WavyBackground>
   )
 }
 
