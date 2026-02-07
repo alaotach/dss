@@ -14,12 +14,12 @@ export default function GovernancePanel() {
       .finally(() => setLoading(false))
   }, [])
 
-  if (loading) return <p className="text-gray-500 text-center py-20">Loading governance status...</p>
-  if (error) return <p className="text-red-600 text-center py-20">Error: {error}</p>
+  if (loading) return <p className="text-textSecondary text-center py-20 text-sm">Loading governance status...</p>
+  if (error) return <p className="text-textPrimary bg-surface px-5 py-4 border border-riskHigh text-center mx-auto max-w-lg my-20 text-sm">{error}</p>
   if (status.length === 0)
     return (
-      <div className="text-center py-20 text-gray-400">
-        <p className="text-lg">No governance data available</p>
+      <div className="text-center py-20 text-textSecondary">
+        <p className="text-sm font-medium">No governance data available</p>
       </div>
     )
 
@@ -29,31 +29,31 @@ export default function GovernancePanel() {
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Governance & Human Oversight Panel</h2>
-        <p className="text-gray-600 text-sm">
+        <h2 className="text-xl font-semibold text-textPrimary mb-2">Governance & Human Oversight Panel</h2>
+        <p className="text-textSecondary text-xs uppercase tracking-wide">
           Transparency into governance gate decisions and approval requirements
         </p>
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-gray-50 border border-gray-300 rounded-lg p-5">
-          <div className="text-3xl font-bold text-gray-800 mb-1">{status.length}</div>
-          <div className="text-sm text-gray-600 font-semibold">Total Regions</div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-gradient-to-br from-white to-slate-50 border-2 border-slate-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+          <div className="text-4xl font-bold text-slate-900 mb-2">{status.length}</div>
+          <div className="text-sm text-slate-600 font-semibold uppercase tracking-wide">Total Regions</div>
         </div>
-        <div className="bg-gray-50 border border-gray-300 rounded-lg p-5">
-          <div className="text-3xl font-bold text-gray-800 mb-1">{approvalCount}</div>
-          <div className="text-sm text-gray-600 font-semibold">Require Human Approval</div>
+        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+          <div className="text-4xl font-bold text-blue-700 mb-2">{approvalCount}</div>
+          <div className="text-sm text-blue-600 font-semibold uppercase tracking-wide">Require Human Approval</div>
         </div>
-        <div className="bg-gray-50 border border-gray-300 rounded-lg p-5">
-          <div className="text-3xl font-bold text-gray-800 mb-1">{criticalCount}</div>
-          <div className="text-sm text-gray-600 font-semibold">Critical Escalations</div>
+        <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+          <div className="text-4xl font-bold text-amber-700 mb-2">{criticalCount}</div>
+          <div className="text-sm text-amber-600 font-semibold uppercase tracking-wide">Critical Escalations</div>
         </div>
       </div>
 
       {/* Core Principle Banner */}
-      <div className="bg-gray-800 text-white rounded-lg p-6 mb-6 border border-gray-700">
-        <h3 className="text-lg font-bold mb-2">Core Governance Principle</h3>
+      <div className="bg-surface text-textPrimary p-5 mb-6 border border-border">
+        <h3 className="text-sm font-semibold mb-2 uppercase tracking-wide">Core Governance Principle</h3>
         <p className="text-sm leading-relaxed">
           This system <strong>NEVER</strong> executes decisions autonomously. All actions require
           explicit human approval. The governance gate evaluates risk confidence, data sufficiency,
@@ -62,42 +62,39 @@ export default function GovernancePanel() {
       </div>
 
       {/* Governance Table */}
-      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+      <div className="bg-panel border border-border overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-gray-100 border-b">
+          <thead className="bg-surface border-b border-border">
             <tr>
-              <th className="px-4 py-3 text-left font-semibold">Region</th>
-              <th className="px-4 py-3 text-left font-semibold">Risk Level</th>
-              <th className="px-4 py-3 text-left font-semibold">Confidence</th>
-              <th className="px-4 py-3 text-left font-semibold">Governance Status</th>
-              <th className="px-4 py-3 text-left font-semibold">Approval Required</th>
-              <th className="px-4 py-3 text-left font-semibold">Reason</th>
+              <th className="px-4 py-3 text-left font-medium text-textPrimary">Region</th>
+              <th className="px-4 py-3 text-left font-medium text-textPrimary">Risk Level</th>
+              <th className="px-4 py-3 text-left font-medium text-textPrimary">Confidence</th>
+              <th className="px-4 py-3 text-left font-medium text-textPrimary">Governance Status</th>
+              <th className="px-4 py-3 text-left font-medium text-textPrimary">Approval Required</th>
+              <th className="px-4 py-3 text-left font-medium text-textPrimary">Reason</th>
             </tr>
           </thead>
           <tbody>
             {status.map((item, i) => (
-              <tr key={i} className="border-b hover:bg-gray-50">
-                <td className="px-4 py-3 font-semibold">{item.region}</td>
+              <tr key={i} className="border-b border-border hover:bg-surface/50">
+                <td className="px-4 py-3 font-medium text-textPrimary">{item.region}</td>
                 <td className="px-4 py-3">
                   <span
-                    className={`inline-block px-2 py-1 rounded text-xs font-bold ${
+                    className={`inline-block px-2 py-1 text-xs font-medium ${
                       item.risk_level === 'CRITICAL'
-                        ? 'bg-red-600 text-white'
+                        ? 'bg-riskHigh text-textPrimary'
                         : item.risk_level === 'HIGH'
-                        ? 'bg-orange-500 text-white'
+                        ? 'bg-[#7A3B3B] text-textPrimary'
                         : item.risk_level === 'MEDIUM'
-                        ? 'bg-yellow-400 text-gray-900'
-                        : 'bg-green-500 text-white'
+                        ? 'bg-riskMedium text-textPrimary'
+                        : 'bg-riskLow text-textPrimary'
                     }`}
                   >
                     {item.risk_level}
                   </span>
                 </td>
                 <td className="px-4 py-3">
-                  <span
-                    className={`font-mono ${
-                      item.confidence >= 0.7
-                        ? 'text-green-700'
+                  <span className="font-mono text-textSecondary">
                         : item.confidence >= 0.5
                         ? 'text-yellow-700'
                         : 'text-red-700'

@@ -2,17 +2,17 @@ import { useEffect, useState } from 'react'
 import { api } from '../api'
 
 const RISK_COLORS = {
-  CRITICAL: 'bg-red-900 text-white border-red-800',
-  HIGH: 'bg-orange-800 text-white border-orange-700',
-  MEDIUM: 'bg-yellow-700 text-white border-yellow-600',
-  LOW: 'bg-gray-600 text-white border-gray-500',
+  CRITICAL: 'bg-riskHigh text-textPrimary border-riskHigh',
+  HIGH: 'bg-[#7A3B3B] text-textPrimary border-[#7A3B3B]',
+  MEDIUM: 'bg-riskMedium text-textPrimary border-riskMedium',
+  LOW: 'bg-riskLow text-textPrimary border-riskLow',
 }
 
 const RISK_BADGES = {
-  CRITICAL: 'bg-red-800',
-  HIGH: 'bg-orange-700',
-  MEDIUM: 'bg-yellow-600',
-  LOW: 'bg-gray-500',
+  CRITICAL: 'bg-riskHigh/20 text-textPrimary border border-riskHigh',
+  HIGH: 'bg-[#7A3B3B]/20 text-textPrimary border border-[#7A3B3B]',
+  MEDIUM: 'bg-riskMedium/20 text-textPrimary border border-riskMedium',
+  LOW: 'bg-riskLow/20 text-textPrimary border border-riskLow',
 }
 
 export default function SituationalDashboard({ onSelectRegion }) {
@@ -70,52 +70,46 @@ export default function SituationalDashboard({ onSelectRegion }) {
               </div>
 
               {/* Risk Score */}
-              <div className="mb-4">
+              <div className="mb-3">
                 <div className="flex justify-between text-sm mb-1">
-                  <span className="font-semibold">Risk Score</span>
+                  <span className="font-medium">Risk Score</span>
                   <span className="font-mono">{(assessment.risk_score * 100).toFixed(1)}/100</span>
                 </div>
-                <div className="w-full bg-white/30 rounded-full h-3">
+                <div className="w-full bg-black/20 h-2">
                   <div
-                    className="bg-white h-3 rounded-full transition-all"
+                    className="bg-textPrimary h-2 transition-all"
                     style={{ width: `${assessment.risk_score * 100}%` }}
                   />
                 </div>
               </div>
 
               {/* Confidence */}
-              <div className="mb-4">
+              <div className="mb-3">
                 <div className="flex justify-between text-sm mb-1">
-                  <span className="font-semibold">Confidence</span>
+                  <span className="font-medium">Confidence</span>
                   <span className="font-mono">{(assessment.confidence * 100).toFixed(0)}%</span>
                 </div>
-                <div className="w-full bg-white/30 rounded-full h-3">
+                <div className="w-full bg-black/20 h-2">
                   <div
-                    className={`h-3 rounded-full transition-all ${
-                      assessment.confidence >= 0.7
-                        ? 'bg-green-600'
-                        : assessment.confidence >= 0.5
-                        ? 'bg-yellow-500'
-                        : 'bg-red-500'
-                    }`}
+                    className="bg-textSecondary h-2 transition-all"
                     style={{ width: `${assessment.confidence * 100}%` }}
                   />
                 </div>
               </div>
 
               {/* Components */}
-              <div className="grid grid-cols-3 gap-2 mb-4 text-sm">
-                <div className="bg-white/20 rounded p-2 text-center">
-                  <div className="font-semibold">Hazard</div>
-                  <div className="text-xl font-bold">{(assessment.components.hazard * 100).toFixed(0)}%</div>
+              <div className="grid grid-cols-3 gap-2 mb-3 text-sm">
+                <div className="bg-black/20 p-2 text-center">
+                  <div className="font-medium text-xs">Hazard</div>
+                  <div className="text-lg font-semibold">{(assessment.components.hazard * 100).toFixed(0)}%</div>
                 </div>
-                <div className="bg-white/20 rounded p-2 text-center">
-                  <div className="font-semibold">Exposure</div>
-                  <div className="text-xl font-bold">{(assessment.components.exposure * 100).toFixed(0)}%</div>
+                <div className="bg-black/20 p-2 text-center">
+                  <div className="font-medium text-xs">Exposure</div>
+                  <div className="text-lg font-semibold">{(assessment.components.exposure * 100).toFixed(0)}%</div>
                 </div>
-                <div className="bg-white/20 rounded p-2 text-center">
-                  <div className="font-semibold">Vulnerability</div>
-                  <div className="text-xl font-bold">{(assessment.components.vulnerability * 100).toFixed(0)}%</div>
+                <div className="bg-black/20 p-2 text-center">
+                  <div className="font-medium text-xs">Vulnerability</div>
+                  <div className="text-lg font-semibold">{(assessment.components.vulnerability * 100).toFixed(0)}%</div>
                 </div>
               </div>
 

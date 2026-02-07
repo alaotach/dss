@@ -88,21 +88,21 @@ export default function App() {
             <button
               onClick={handleLoadScenario}
               disabled={loading}
-              className="bg-gray-700 hover:bg-gray-600 text-white font-medium px-4 py-2 rounded transition disabled:opacity-50 text-sm border border-gray-600"
+              className="bg-panel hover:bg-border text-textPrimary font-medium px-5 py-2 border border-border transition disabled:opacity-50 text-sm"
             >
               Load Flood Scenario
             </button>
             <button
               onClick={handleConflictingReports}
               disabled={loading}
-              className="bg-gray-700 hover:bg-gray-600 text-white font-medium px-4 py-2 rounded transition disabled:opacity-50 text-sm border border-gray-600"
+              className="bg-panel hover:bg-border text-textPrimary font-medium px-5 py-2 border border-border transition disabled:opacity-50 text-sm"
             >
               Conflicting Reports
             </button>
             <button
               onClick={handleInjectUncertainty}
               disabled={loading}
-              className="bg-gray-700 hover:bg-gray-600 text-white font-medium px-4 py-2 rounded transition disabled:opacity-50 text-sm border border-gray-600"
+              className="bg-panel hover:bg-border text-textPrimary font-medium px-5 py-2 border border-border transition disabled:opacity-50 text-sm"
             >
               Inject Uncertainty
             </button>
@@ -130,10 +130,10 @@ export default function App() {
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
-              className={`px-5 py-3 text-sm font-semibold rounded-t-lg transition ${
+              className={`px-5 py-3 text-sm font-medium transition ${
                 tab === t.id
-                  ? 'bg-gray-50 text-gray-900 border-t-2 border-x border-gray-400'
-                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+                  ? 'bg-panel text-textPrimary border-t border-x border-border'
+                  : 'text-textSecondary hover:text-textPrimary'
               }`}
             >
               {t.label}
