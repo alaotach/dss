@@ -3,12 +3,26 @@ Advanced Disaster Response Decision-Support System — FastAPI Backend
 Enterprise-grade, explainable, human-in-the-loop disaster response
 """
 
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from repositories.database import init_db
 from api.routes import data_ingestion, decision_routes, governance_routes, audit_routes
 from demo import scenarios
+
+# ═══════════════════════════════════════════════════════════════════
+# Configuration
+# ═══════════════════════════════════════════════════════════════════
+
+ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
+CORS_ORIGINS = os.getenv("CORS_ORIGINS", "*")
+
+# Parse CORS origins
+if CORS_ORIGINS == "*":
+    allowed_origins = ["*"]
+else:
+    allowed_origins = [origin.strip() for origin in CORS_ORIGINS.split(",")]
 
 # ═══════════════════════════════════════════════════════════════════
 # Application Setup
@@ -18,11 +32,13 @@ app = FastAPI(
     title="Advanced Disaster Response DSS",
     version="2.0.0",
     description="Human-in-the-loop decision support with explainable AI reasoning",
+    docs_url="/docs" if ENVIRONMENT == "development" else "/docs",
+    redoc_url="/redoc" if ENVIRONMENT == "development" else "/redoc",
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -75,6 +91,7 @@ def root():
     return {
         "system": "Advanced Disaster Response DSS",
         "version": "2.0.0",
+        "environment": ENVIRONMENT,
         "architecture": {
             "data_fusion": "Multi-source integration with confidence tracking",
             "risk_assessment": "Explainable hazard-exposure-vulnerability framework",
@@ -84,4 +101,14 @@ def root():
         },
         "human_in_the_loop": True,
         "autonomous_execution": False
+    }
+
+
+@app.get("/health")
+def health_check():
+    """Health check endpoint for load balancer"""
+    return {
+        "status": "healthy",
+        "environment": ENVIRONMENT,
+        "version": "2.0.0"
     }
