@@ -56,8 +56,13 @@ Once connected via SSH:
 # Update system
 sudo apt update && sudo apt upgrade -y
 
+# Add deadsnakes PPA for Python 3.11 (Ubuntu 22.04 doesn't have 3.11 by default)
+sudo apt install -y software-properties-common
+sudo add-apt-repository -y ppa:deadsnakes/ppa
+sudo apt update
+
 # Install Python 3.11
-sudo apt install -y python3.11 python3.11-venv python3-pip
+sudo apt install -y python3.11 python3.11-venv python3.11-dev python3-pip
 
 # Install Nginx
 sudo apt install -y nginx
@@ -72,12 +77,15 @@ sudo apt install -y git
 ## Part 4: Deploy Application
 
 ```bash
-# Create application directory
+# If you already cloned the repo, navigate to it:
+cd /path/to/your/dss/backend
+
+# OR create new directory and clone:
 sudo mkdir -p /var/www/dss-backend
 sudo chown ubuntu:ubuntu /var/www/dss-backend
 cd /var/www/dss-backend
 
-# Clone repository
+# Clone repository (if not already cloned)
 git clone https://github.com/alaotach/dss.git .
 cd backend
 
